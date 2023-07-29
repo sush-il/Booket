@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "271550542951",
+    "project_id": "booket-10f37",
+    "storage_bucket": "booket-10f37.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:271550542951:android:77e12d6d5d7f89b046d0c2",
+        "android_client_info": {
+          "package_name": "com.example.booket"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "271550542951-u1af8uol6o000tcrsnp1ao937vib21s0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXcuI3oZ5vWZ14GC9MdwWgLYrlvjwqLWY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "271550542951-87qd2735malk1nj5gm3bon7homdg13qa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

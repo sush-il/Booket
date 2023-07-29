@@ -47,6 +47,20 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
 
+  #Google Signin
+  firebase_core: ^2.15.0
+  firebase_auth: ^4.7.1
+  google_sign_in: ^6.1.4
+
+  # GOOGLE ICON
+  font_awesome_flutter: ^10.5.0
+
+  # State Management
+  provider: ^5.0.0
+
+  #Swipable cards
+  liquid_swipe: 
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -59,8 +73,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+     - assets/images/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

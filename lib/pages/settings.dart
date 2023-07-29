@@ -8,12 +8,12 @@ import 'package:flutter/material.dart';
   State<HomePage> createState() => _HomePageState();
 }*/
 
-class SearchPage extends StatelessWidget {
-  const SearchPage({super.key});
+class SettingsPage extends StatelessWidget {
+  const SettingsPage({super.key});
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(child: Text("Search Page")),
+      body: Center(child: Text("Settings Page")),
     );
   }
 }
