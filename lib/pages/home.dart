@@ -1,4 +1,3 @@
-import 'package:booket/navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 

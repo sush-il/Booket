@@ -1,4 +1,3 @@
-import 'package:booket/navbar.dart';
 import 'package:flutter/material.dart';
 
 /*class Settings extends StatefulWidget {
