@@ -1,18 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:booket/booksdb.dart';
+import 'package:booket/pages/models/dbmodels.dart';
 
-/*class Settings extends StatefulWidget {
-  const HomePage({super.key});
+class SearchPage extends StatefulWidget {
+  const SearchPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
-}*/
+  State<SearchPage> createState() => _SearchPageState();
+}
 
-class SearchPage extends StatelessWidget {
-  const SearchPage({super.key});
+class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text("Search Page")),
+    return Scaffold(
+      body: Center(
+          child: ElevatedButton(
+              onPressed: () {
+                displayBooks();
+              },
+              child: Text('Button'))),
     );
+  }
+
+  void displayBooks() async {
+    List<Book> books = await BooksDatabase.instance.readAllBooks();
+    for (var book in books) {
+      print(book.title);
+    }
+    print(await BooksDatabase.instance.getDbLength());
   }
 }

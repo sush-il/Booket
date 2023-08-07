@@ -2,9 +2,8 @@ import 'package:booket/navbar.dart';
 import 'package:booket/pages/add.dart';
 import 'package:booket/pages/search.dart';
 import 'package:booket/pages/settings.dart';
-import 'package:flutter/material.dart';
-import 'package:booket/pages/home.dart';
 import 'package:booket/pages/login.dart';
+import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 Future main() async {

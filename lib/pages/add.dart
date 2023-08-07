@@ -1,4 +1,7 @@
+import 'package:booket/booksdb.dart';
 import 'package:flutter/material.dart';
+import 'package:booket/pages/models/dbmodels.dart';
+import 'package:sqflite/sqflite.dart';
 
 class AddPage extends StatefulWidget {
   const AddPage({super.key});
@@ -9,6 +12,10 @@ class AddPage extends StatefulWidget {
 
 class _AddPageState extends State<AddPage> {
   final _formKey = GlobalKey<FormState>();
+  final db = BooksDatabase.instance;
+
+  String? bookTitle = "";
+  String? bookNote = "";
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +45,8 @@ class _AddPageState extends State<AddPage> {
                     fontWeight: FontWeight.w700,
                   ),
                   onSaved: (String? value) {
-                    // This optional block of code can be used to run
-                    // code when the user saves the form.
+                    // This optional block of code can be used to run code when the user saves the form.
+                    setState(() => bookTitle = value);
                   },
                   validator: (String? value) {
                     return (value == null || value.isEmpty)
@@ -63,8 +70,8 @@ class _AddPageState extends State<AddPage> {
                     fontSize: 20,
                   ),
                   onSaved: (String? value) {
-                    // This optional block of code can be used to run
-                    // code when the user saves the form.
+                    // This optional block of code can be used to run code when the user saves the form.
+                    setState(() => bookNote = value);
                   },
                   validator: (String? value) {
                     return (value == null || value.isEmpty)
@@ -86,9 +93,15 @@ class _AddPageState extends State<AddPage> {
                       onPressed: () {
                         // Validate returns true if the form is valid, or false otherwise.
                         if (_formKey.currentState!.validate()) {
+                          FocusScope.of(context)
+                              .unfocus(); //Dropdown the keyboard after saving
+                          _formKey.currentState?.save();
+
+                          db.addBook(Book(title: bookTitle));
+                          print(db.readAllBooks().toString());
                           // If the form is valid, display a snackbar.
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Saving...')),
+                            const SnackBar(content: Text("Saving...")),
                           );
                         }
                       },
