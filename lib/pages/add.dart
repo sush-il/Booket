@@ -1,7 +1,6 @@
-import 'package:booket/booksdb.dart';
+import 'package:booket/manageDB.dart';
 import 'package:flutter/material.dart';
 import 'package:booket/pages/models/dbmodels.dart';
-import 'package:sqflite/sqflite.dart';
 
 class AddPage extends StatefulWidget {
   const AddPage({super.key});
@@ -12,7 +11,8 @@ class AddPage extends StatefulWidget {
 
 class _AddPageState extends State<AddPage> {
   final _formKey = GlobalKey<FormState>();
-  final db = BooksDatabase.instance;
+  final booksDB = BooksDatabase.instance;
+  //final notesDB = NotesDatabase;
 
   String? bookTitle = "";
   String? bookNote = "";
@@ -97,8 +97,17 @@ class _AddPageState extends State<AddPage> {
                               .unfocus(); //Dropdown the keyboard after saving
                           _formKey.currentState?.save();
 
-                          db.addBook(Book(title: bookTitle));
-                          print(db.readAllBooks().toString());
+                          booksDB.addBook(Book(title: bookTitle)).then(
+                              (addedBook) => NotesDatabase().addNote(
+                                  Note(note: bookNote, bookID: addedBook.id)));
+
+                          //print(notesDB.readAllNotes().note.toString());
+
+                          //notesDB.readAllNotes().
+
+                          //print(addedBook.toString());
+                          //print(booksDB.readAllBooks().toString());
+
                           // If the form is valid, display a snackbar.
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text("Saving...")),

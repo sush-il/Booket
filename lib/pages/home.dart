@@ -1,23 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
-import 'package:booket/booksdb.dart';
+import 'package:booket/manageDB.dart';
 import 'package:booket/pages/models/dbmodels.dart';
-
-final pages = [
-  Container(
-    color: Colors.black,
-    child: const Center(child: Text('Page 1')),
-  ),
-  Container(
-    color: Colors.red,
-    child: const Center(child: Text('Page 2')),
-  ),
-  Container(
-    color: Colors.blue,
-    child: const Center(child: Text('Page 3')),
-  ),
-];
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -33,36 +18,64 @@ class _HomePageState extends State<HomePage> {
         future: BuildPage().buildPage(),
         builder: (context, snapshot) {
           List<Widget> pages = snapshot.data!;
-          return LiquidSwipe(pages: pages);
+          return LiquidSwipe(
+            pages: pages,
+            enableLoop: true,
+            enableSideReveal: true,
+            positionSlideIcon: 0.5,
+          );
         });
-
-    //return LiquidSwipe(pages: BuildPage().buildPage());
   }
 }
 
+/* Class builds a page for liquid swipe */
 class BuildPage {
   Future<List<Widget>> buildPage() async {
-    //Generate a random color
-    String bookTitle = await displayBooks();
-
-    return [
-      Container(
+    //get a random book
+    List<String> bookNotes = await getNotes();
+    List<Widget> booksInfo = [];
+    //Generate a page using each book title
+    for (var bookNote in bookNotes) {
+      booksInfo.add(Container(
         color: generateRandomColor(),
-        child: Center(child: Text(bookTitle)),
-      )
-    ];
+        child: Center(child: Text(bookNote)),
+      ));
+    }
+
+    return booksInfo;
   }
 
-  Future<String> displayBooks() async {
-    int bookId = await getRandomBookId();
-    Book book = await BooksDatabase.instance.readBook(bookId);
-    return book.title ?? '';
+  // Grab a random note from the database
+  Future<List<String>> getNotes() async {
+    List<String> bookNotes = [];
+
+    for (int i = 0; i < 5; i++) {
+      int noteID = await getRandomNoteId();
+      Note note = await NotesDatabase().readNote(noteID);
+      bookNotes.add(note.note ?? "None");
+    }
+    // ---------- Checks --------------------//
+
+    /*List<Book> books = await BooksDatabase.instance.readAllBooks();
+    List<Note> notes = await NotesDatabase().readAllNotes();
+
+    for (var element in books) {
+      print(element.title);
+    }
+
+    for (var element in notes) {
+      print(element.note);
+    }*/
+
+    // ------------------------------------- //
+    return bookNotes;
   }
 
-  Future getRandomBookId() async {
-    int dbLength = await BooksDatabase.instance.getDbLength() - 1;
+  //Generate a random number between 0 - lenth of the book database
+  Future getRandomNoteId() async {
+    int dbLength = await NotesDatabase().getDbLength();
     Random random = Random();
-    return random.nextInt(dbLength);
+    return random.nextInt(dbLength) + 1;
   }
 
   Color generateRandomColor() {
@@ -75,17 +88,3 @@ class BuildPage {
     );
   }
 }
-
-
-//Original working class
-/* 
-class _HomePageState extends State<HomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-      body: LiquidSwipe(pages: pages),
-      bottomNavigationBar: const BottomNavbar(),
-    ));
-  }
-}*/

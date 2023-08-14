@@ -1,4 +1,4 @@
-import 'package:sqflite/sqflite.dart';
+/*import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:booket/pages/models/dbmodels.dart';
 
@@ -9,7 +9,7 @@ class NotesDatabase {
 
   Future<Database> get database async {
     if (_db != null) return _db!;
-    _db = await _initDB('notes.db');
+    _db = await _initDB('books.db');
     return _db!;
   }
 
@@ -24,7 +24,7 @@ class NotesDatabase {
     const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
     const textType = 'TEXT NOT NULL';
 
-    await db.execute('''CREATE TABLE $booksTable(
+    await db.execute('''CREATE TABLE $notesTable(
         ${NoteFields.id} $idType,
         ${NoteFields.note} $textType,
         ${NoteFields.bookID} Integer,
@@ -56,7 +56,7 @@ class NotesDatabase {
   Future<List<Note>> readAllNotes() async {
     final db = await instance.database;
     //final orderBy = '${BookFields.id} ASC';
-    final result = await db.query(booksTable);
+    final result = await db.query(notesTable);
     return result.map((json) => Note.fromJson(json)).toList();
   }
 
@@ -73,7 +73,7 @@ class NotesDatabase {
   Future<int> deleteNote(int id) async {
     final db = await instance.database;
     return db
-        .delete(booksTable, where: '${NoteFields.id} = ?', whereArgs: [id]);
+        .delete(notesTable, where: '${NoteFields.id} = ?', whereArgs: [id]);
   }
 
   Future close() async {
@@ -88,3 +88,4 @@ class NotesDatabase {
     return count;
   }
 }
+*/
