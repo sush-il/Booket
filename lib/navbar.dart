@@ -38,8 +38,8 @@ class _BottomNavbar extends State<BottomNavbar> {
                 icon: Icon(Icons.add_box_rounded),
               ),
               BottomNavigationBarItem(
-                label: 'Search',
-                icon: Icon(Icons.search_rounded),
+                label: 'Explore',
+                icon: Icon(Icons.explore_rounded),
               ),
               BottomNavigationBarItem(
                 label: 'Settings',
