@@ -1,7 +1,6 @@
-import 'package:booket/pages/models/allNotes.dart';
+import 'package:booket/pages/allBooks.dart';
+import 'package:booket/pages/allNotes.dart';
 import 'package:flutter/material.dart';
-import 'package:booket/manageDB.dart';
-import 'package:booket/pages/models/dbmodels.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -60,7 +59,10 @@ class _SearchPageState extends State<SearchPage> {
                       borderRadius: BorderRadius.circular(10)),
                 ),
                 onPressed: () {
-                  displayBooks();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const BooksPage()));
                 },
                 label: const Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -105,20 +107,5 @@ class _SearchPageState extends State<SearchPage> {
                     ]))),
       ]),
     );
-  }
-
-  void displayBooks() async {
-    List<Book> books = await BooksDatabase.instance.readAllBooks();
-
-    for (var book in books) {
-      print(book.title);
-    }
-  }
-
-  void displayNotes() async {
-    List<Note> notes = await NotesDatabase().readAllNotes();
-    for (var note in notes) {
-      print(note.note);
-    }
   }
 }

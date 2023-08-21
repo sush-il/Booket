@@ -3,17 +3,27 @@ import 'package:booket/manageDB.dart';
 import 'package:booket/pages/models/dbmodels.dart';
 
 class NotesPage extends StatefulWidget {
-  const NotesPage({super.key});
+  final Future<List<Note>>? bookNotes;
+
+  const NotesPage({super.key, this.bookNotes});
 
   @override
   State<NotesPage> createState() => _NotesPageState();
 }
 
 class _NotesPageState extends State<NotesPage> {
+  late Future<List<Note>>? notes;
+  @override
+  void initState() {
+    super.initState();
+    notes = widget.bookNotes;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
+            margin: const EdgeInsets.only(top: 10),
             alignment: Alignment.center,
             child: FutureBuilder<List<Widget>>(
               future: showNotes(),
@@ -26,22 +36,31 @@ class _NotesPageState extends State<NotesPage> {
 
   Future<List<Widget>> showNotes() async {
     List<Widget> noteCards = [
-      const Text(
-        "Notes",
-        textAlign: TextAlign.left,
-        style: TextStyle(
-          fontSize: 25,
-          fontWeight: FontWeight.bold,
-        ),
-      )
+      Container(
+          alignment: Alignment.bottomLeft,
+          child: const Text(
+            "NOTES",
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+            ),
+          ))
     ];
+
     List<Note> notes = await NotesDatabase().readAllNotes();
+    List<Note>? bookNotes = await this.notes;
+
+    if (bookNotes != null) {
+      notes = bookNotes;
+    }
+
     for (var note in notes) {
       noteCards.add(Container(
         alignment: Alignment.bottomLeft,
         //decoration: BoxDecoration(border: Border.all(color: Colors.green)),
         padding: const EdgeInsets.all(10),
-        margin: const EdgeInsets.all(5.0),
+        margin: const EdgeInsets.all(5),
         child: RichText(
           text: TextSpan(
               text: note.note,
@@ -59,7 +78,6 @@ class _NotesPageState extends State<NotesPage> {
               ]),
         ),
       ));
-      //getBookName(note.bookID!).then((value) => {print(value)});
     }
     return noteCards;
   }

@@ -97,7 +97,6 @@ class BooksDatabase {
 }
 
 //Database management for Book Notes
-
 class NotesDatabase {
   //static final NotesDatabase instance = NotesDatabase._init();
 
@@ -157,5 +156,16 @@ class NotesDatabase {
     int? count = Sqflite.firstIntValue(
         await db.rawQuery('''SELECT COUNT(*) FROM notes'''));
     return count;
+  }
+
+  Future<List<Note>> getBookNotes(int bookID) async {
+    final db = await instance.database;
+
+    final results = await db.query(notesTable,
+        columns: NoteFields.values,
+        where: '${NoteFields.bookID} = ?',
+        whereArgs: [bookID]);
+
+    return results.map((json) => Note.fromJson(json)).toList();
   }
 }
