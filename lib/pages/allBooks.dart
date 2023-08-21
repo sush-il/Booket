@@ -1,4 +1,5 @@
 import 'package:booket/pages/allNotes.dart';
+import 'package:booket/pages/editBook.dart';
 import 'package:flutter/material.dart';
 import 'package:booket/manageDB.dart';
 import 'package:booket/pages/models/dbmodels.dart';
@@ -45,24 +46,46 @@ class _BooksPageState extends State<BooksPage> {
         alignment: Alignment.bottomLeft,
         //padding: const EdgeInsets.all(10),
         margin: const EdgeInsets.all(5),
-        child: TextButton(
-          style: TextButton.styleFrom(
-            textStyle:
-                const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          onPressed: () {
-            Future<List<Note>> bookNotes =
-                NotesDatabase().getBookNotes(book.id!);
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => NotesPage(
-                    bookNotes: bookNotes,
+        child:
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          SizedBox(
+              width: MediaQuery.of(context).size.width * 0.5,
+              child: ElevatedButton(
+                onPressed: () {
+                  Future<List<Note>> bookNotes =
+                      NotesDatabase().getBookNotes(book.id!);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => NotesPage(
+                          bookNotes: bookNotes,
+                        ),
+                      ));
+                },
+                child: Text(
+                  book.title!,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
                   ),
-                ));
-          },
-          child: Text(book.title!),
-        ),
+                ),
+              )),
+          Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            TextButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => EditBook(book: book)));
+                },
+                child: const Text("Edit")),
+            TextButton(
+                onPressed: () {
+                  NotesDatabase().deleteWhereBookID(book.id!);
+                  BooksDatabase.instance.deleteBook(book.id!);
+                },
+                child: const Text("Delete")),
+          ])
+        ]),
       ));
     }
     return noteCards;

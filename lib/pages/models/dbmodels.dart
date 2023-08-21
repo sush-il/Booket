@@ -10,10 +10,10 @@ class BookFields {
 
 class Book {
   final int? id;
-  final String? title;
+  String? title;
   //final DateTime createdTime;
 
-  const Book({this.id, required this.title});
+  Book({this.id, required this.title});
 
   Map<String, Object?> toJson() => {BookFields.id: id, BookFields.title: title};
 
@@ -43,9 +43,9 @@ class NoteFields {
 class Note {
   final int? id;
   final int? bookID;
-  final String? note;
+  String? note;
 
-  const Note({this.id, this.bookID, required this.note});
+  Note({this.id, this.bookID, required this.note});
 
   Map<String, Object?> toJson() =>
       {NoteFields.id: id, NoteFields.bookID: bookID, NoteFields.note: note};

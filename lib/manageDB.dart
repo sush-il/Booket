@@ -130,12 +130,12 @@ class NotesDatabase {
     return result.map((json) => Note.fromJson(json)).toList();
   }
 
-  Future<int> updateNote(Book note) async {
+  Future<int> updateNote(Note note) async {
     final db = await instance.database;
     return db.update(
       notesTable,
       note.toJson(),
-      where: '${BookFields.id} = ?',
+      where: '${NoteFields.id} = ?',
       whereArgs: [note.id],
     );
   }
@@ -167,5 +167,11 @@ class NotesDatabase {
         whereArgs: [bookID]);
 
     return results.map((json) => Note.fromJson(json)).toList();
+  }
+
+  Future deleteWhereBookID(int bookID) async {
+    final db = await instance.database;
+    db.delete(notesTable,
+        where: '${NoteFields.bookID} =?', whereArgs: [bookID]);
   }
 }

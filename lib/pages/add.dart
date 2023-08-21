@@ -101,13 +101,6 @@ class _AddPageState extends State<AddPage> {
                               (addedBook) => NotesDatabase().addNote(
                                   Note(note: bookNote, bookID: addedBook.id)));
 
-                          //print(notesDB.readAllNotes().note.toString());
-
-                          //notesDB.readAllNotes().
-
-                          //print(addedBook.toString());
-                          //print(booksDB.readAllBooks().toString());
-
                           // If the form is valid, display a snackbar.
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text("Saving...")),

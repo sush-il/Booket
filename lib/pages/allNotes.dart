@@ -1,3 +1,4 @@
+import 'package:booket/pages/editNote.dart';
 import 'package:flutter/material.dart';
 import 'package:booket/manageDB.dart';
 import 'package:booket/pages/models/dbmodels.dart';
@@ -61,22 +62,45 @@ class _NotesPageState extends State<NotesPage> {
         //decoration: BoxDecoration(border: Border.all(color: Colors.green)),
         padding: const EdgeInsets.all(10),
         margin: const EdgeInsets.all(5),
-        child: RichText(
-          text: TextSpan(
-              text: note.note,
-              style: const TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20),
-              children: <TextSpan>[
-                TextSpan(
-                    text: "\n- ${await getBookName(note.bookID!)}",
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                        color: Colors.grey)),
-              ]),
-        ),
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: RichText(
+                    text: TextSpan(
+                        text: note.note,
+                        style: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20),
+                        children: <TextSpan>[
+                          TextSpan(
+                              text: "\n- ${await getBookName(note.bookID!)}",
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                  color: Colors.grey)),
+                        ]),
+                  )),
+              Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => EditNote(
+                                    bookNote: note,
+                                  )));
+                    },
+                    child: const Text("Edit")),
+                TextButton(
+                    onPressed: () {
+                      NotesDatabase().deleteNote(note.id!);
+                    },
+                    child: const Text("Delete"))
+              ])
+            ]),
       ));
     }
     return noteCards;
