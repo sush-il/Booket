@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
         routes: {
           "/": (context) => LoginPage(),
           "/home": (context) => const BottomNavbar(), //const HomePage(),
-          "/login": (context) => LoginPage(),
+          //"/login": (context) => LoginPage(),
           "/settings": (context) => const SettingsPage(),
           "/search": (context) => const SearchPage(),
           "/add": (context) => const AddPage()

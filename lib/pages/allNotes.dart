@@ -1,10 +1,12 @@
+import 'package:booket/pages/addNotesToBook.dart';
 import 'package:booket/pages/editNote.dart';
 import 'package:flutter/material.dart';
 import 'package:booket/manageDB.dart';
 import 'package:booket/pages/models/dbmodels.dart';
 
 class NotesPage extends StatefulWidget {
-  final Future<List<Note>>? bookNotes;
+  final Future<List<Note>>?
+      bookNotes; // Receiving all notes for a specific book
 
   const NotesPage({super.key, this.bookNotes});
 
@@ -28,10 +30,10 @@ class _NotesPageState extends State<NotesPage> {
             alignment: Alignment.center,
             child: FutureBuilder<List<Widget>>(
               future: showNotes(),
-              builder: ((context, snapshot) => (Container(
+              builder: ((context, snapshot) => Container(
                   margin: const EdgeInsets.only(top: 10),
                   padding: const EdgeInsets.all(20),
-                  child: Column(children: snapshot.data!)))),
+                  child: ListView(children: snapshot.data!))),
             )));
   }
 
@@ -39,6 +41,7 @@ class _NotesPageState extends State<NotesPage> {
     List<Widget> noteCards = [
       Container(
           alignment: Alignment.bottomLeft,
+          padding: const EdgeInsets.only(bottom: 15),
           child: const Text(
             "NOTES",
             textAlign: TextAlign.left,
@@ -54,6 +57,19 @@ class _NotesPageState extends State<NotesPage> {
 
     if (bookNotes != null) {
       notes = bookNotes;
+      Book bookRealtedToNote =
+          await BooksDatabase.instance.readBook(notes[0].bookID!);
+      noteCards.add(Container(
+          child: FloatingActionButton(
+        mini: true,
+        child: const Icon(Icons.add),
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => AddNote(data: bookRealtedToNote)));
+        },
+      )));
     }
 
     for (var note in notes) {

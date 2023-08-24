@@ -20,10 +20,10 @@ class _BooksPageState extends State<BooksPage> {
             alignment: Alignment.center,
             child: FutureBuilder<List<Widget>>(
               future: showBooks(),
-              builder: ((context, snapshot) => (Container(
+              builder: ((context, snapshot) => Container(
                   margin: const EdgeInsets.only(top: 10),
                   padding: const EdgeInsets.all(20),
-                  child: Column(children: snapshot.data!)))),
+                  child: ListView(children: snapshot.data!))),
             )));
   }
 
