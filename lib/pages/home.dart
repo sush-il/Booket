@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
           return LiquidSwipe(
             pages: pages,
             enableLoop: true,
-            enableSideReveal: true,
+            //enableSideReveal: true,
             positionSlideIcon: 0.5,
           );
         });
@@ -32,22 +32,30 @@ class _HomePageState extends State<HomePage> {
 class BuildPage {
   Future<List<Widget>> buildPage() async {
     //get a random book
-    print("runs here");
     List<Note> bookNotes = await getNotes();
     List<Widget> booksInfo = [];
     //Generate a page using each book title
     for (var bookNote in bookNotes) {
       booksInfo.add(Container(
-        color: generateRandomColor(),
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: generateRandomColor(), fit: BoxFit.cover)),
+        //color: generateRandomColor(),
         padding: const EdgeInsets.all(10),
         child: Center(
             child: RichText(
           text: TextSpan(
               text: "'${bookNote.note}'",
-              style: const TextStyle(
+              style: TextStyle(
                   color: Colors.white,
+                  shadows: [
+                    Shadow(
+                        color: Colors.black.withOpacity(1.0),
+                        offset: const Offset(2, 2),
+                        blurRadius: 5.0),
+                  ],
                   fontWeight: FontWeight.bold,
-                  fontSize: 40),
+                  fontSize: 30),
               children: <TextSpan>[
                 TextSpan(
                     text: "\n- ${await getBookName(bookNote.bookID!)}",
@@ -59,8 +67,6 @@ class BuildPage {
         )),
       ));
     }
-    print("books info");
-    print(booksInfo);
     return booksInfo;
   }
 
@@ -73,25 +79,32 @@ class BuildPage {
       Note note = await NotesDatabase().readNote(noteID);
       bookNotes.add(note);
     }
-
     return bookNotes;
   }
 
-  //Generate a random number between 0 - lenth of the book database
+  //Returns a random note ID from all Notes
   Future getRandomNoteId() async {
-    int dbLength = await NotesDatabase().getDbLength();
+    List<int> allIDs = await NotesDatabase().getAllNoteIDs();
     Random random = Random();
-    return random.nextInt(dbLength) + 1;
+    return allIDs[random.nextInt(allIDs.length)];
   }
 
-  Color generateRandomColor() {
+  AssetImage generateRandomColor() {
     Random random = Random();
-    return Color.fromRGBO(
-      random.nextInt(255),
-      random.nextInt(255),
-      random.nextInt(255),
-      1,
-    );
+    List<AssetImage> images = const [
+      AssetImage("assets/images/wall01.jpg"),
+      AssetImage("assets/images/wall02.jpg"),
+      AssetImage("assets/images/wall03.jpg"),
+      AssetImage("assets/images/wall04.jpg"),
+      AssetImage("assets/images/wall05.jpg"),
+      AssetImage("assets/images/wall06.jpg"),
+      AssetImage("assets/images/wall07.jpg"),
+      AssetImage("assets/images/wall08.jpg"),
+      AssetImage("assets/images/wall09.jpg"),
+      AssetImage("assets/images/wall10.jpg"),
+      AssetImage("assets/images/wall11.jpg")
+    ];
+    return images[random.nextInt(images.length)];
   }
 
   //gets the name of the book from bookID

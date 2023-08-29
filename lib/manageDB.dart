@@ -100,7 +100,7 @@ class BooksDatabase {
 class NotesDatabase {
   //static final NotesDatabase instance = NotesDatabase._init();
 
-  final instance = BooksDatabase.instance;
+  final BooksDatabase instance = BooksDatabase.instance;
 
   Future<Note> addNote(Note note) async {
     final db = await instance.database;
@@ -110,7 +110,6 @@ class NotesDatabase {
 
   Future<Note> readNote(int id) async {
     final db = await instance.database;
-
     final item = await db.query(notesTable,
         columns: NoteFields.values,
         where: '${NoteFields.id} = ?',
@@ -151,11 +150,10 @@ class NotesDatabase {
     db.close();
   }
 
-  Future getDbLength() async {
+  Future getAllNoteIDs() async {
     final db = await instance.database;
-    int? count = Sqflite.firstIntValue(
-        await db.rawQuery('''SELECT COUNT(*) FROM notes'''));
-    return count;
+    final allIDs = await db.query(notesTable, columns: [NoteFields.id]);
+    return allIDs.map((map) => map['_id'] as int).toList();
   }
 
   Future<List<Note>> getBookNotes(int bookID) async {
@@ -165,7 +163,6 @@ class NotesDatabase {
         columns: NoteFields.values,
         where: '${NoteFields.bookID} = ?',
         whereArgs: [bookID]);
-
     return results.map((json) => Note.fromJson(json)).toList();
   }
 

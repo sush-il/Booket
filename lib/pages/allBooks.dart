@@ -44,7 +44,6 @@ class _BooksPageState extends State<BooksPage> {
     for (var book in books) {
       noteCards.add(Container(
         alignment: Alignment.bottomLeft,
-        //padding: const EdgeInsets.all(10),
         margin: const EdgeInsets.all(5),
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
