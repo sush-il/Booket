@@ -16,6 +16,14 @@ class _AddPageState extends State<AddPage> {
 
   String? bookTitle = "";
   String? bookNote = "";
+  final bookField = TextEditingController();
+  final noteField = TextEditingController();
+
+  //Clears text from the text form fields after save
+  void clearText() {
+    bookField.clear();
+    noteField.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +40,7 @@ class _AddPageState extends State<AddPage> {
               children: <Widget>[
                 TextFormField(
                   //Text Fields
+                  controller: bookField,
                   maxLines: 3,
                   minLines: 1,
                   decoration: const InputDecoration(
@@ -60,6 +69,7 @@ class _AddPageState extends State<AddPage> {
                 TextFormField(
                   maxLines: 10,
                   minLines: 1,
+                  controller: noteField,
                   decoration: const InputDecoration(
                     //icon: Icon(Icons.description_rounded),
                     contentPadding: EdgeInsets.all(12),
@@ -104,8 +114,9 @@ class _AddPageState extends State<AddPage> {
 
                           // If the form is valid, display a snackbar.
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text("Saving...")),
+                            const SnackBar(content: Text("Saved")),
                           );
+                          clearText();
                         }
                       },
                       child: const Text('Save'),

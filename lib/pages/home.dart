@@ -58,7 +58,9 @@ class BuildPage {
                   fontSize: 30),
               children: <TextSpan>[
                 TextSpan(
-                    text: "\n- ${await getBookName(bookNote.bookID!)}",
+                    text: bookNote.bookID == 0
+                        ? "\n -No Book"
+                        : "\n- ${await getBookName(bookNote.bookID!)}",
                     style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
@@ -72,8 +74,13 @@ class BuildPage {
 
   // Grab a random note from the database
   Future<List<Note>> getNotes() async {
-    List<Note> bookNotes = [];
+    int data = await getRandomNoteId();
 
+    if (data == 0) {
+      return [Note(note: "No Notes", bookID: 0)];
+    }
+
+    List<Note> bookNotes = [];
     for (int i = 0; i < 5; i++) {
       int noteID = await getRandomNoteId();
       Note note = await NotesDatabase().readNote(noteID);
@@ -86,6 +93,7 @@ class BuildPage {
   Future getRandomNoteId() async {
     List<int> allIDs = await NotesDatabase().getAllNoteIDs();
     Random random = Random();
+    if (allIDs.isEmpty) return 0;
     return allIDs[random.nextInt(allIDs.length)];
   }
 
