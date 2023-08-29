@@ -14,7 +14,7 @@ class BottomNavbar extends StatefulWidget {
 class _BottomNavbar extends State<BottomNavbar> {
   int _pageIndex = 0;
 
-  final screens = const [HomePage(), AddPage(), SearchPage(), SettingsPage()];
+  final screens = const [HomePage(), AddPage(), SearchPage()];
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +41,10 @@ class _BottomNavbar extends State<BottomNavbar> {
                 label: 'Explore',
                 icon: Icon(Icons.explore_rounded),
               ),
-              BottomNavigationBarItem(
+              /*BottomNavigationBarItem(
                 label: 'Settings',
                 icon: Icon(Icons.settings_rounded),
-              ),
+              ),*/
             ]),
         body: screens.elementAt(_pageIndex));
   }

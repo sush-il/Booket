@@ -32,6 +32,7 @@ class _HomePageState extends State<HomePage> {
 class BuildPage {
   Future<List<Widget>> buildPage() async {
     //get a random book
+    print("runs here");
     List<Note> bookNotes = await getNotes();
     List<Widget> booksInfo = [];
     //Generate a page using each book title
@@ -58,7 +59,8 @@ class BuildPage {
         )),
       ));
     }
-
+    print("books info");
+    print(booksInfo);
     return booksInfo;
   }
 

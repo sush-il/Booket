@@ -85,11 +85,12 @@ class _AddPageState extends State<AddPage> {
                 Align(
                     alignment: Alignment.centerRight,
                     child: ElevatedButton(
-                      style: const ButtonStyle(
+                      style: ButtonStyle(
                           backgroundColor: MaterialStatePropertyAll<Color>(
-                              Color.fromARGB(255, 35, 239, 208)),
-                          foregroundColor: MaterialStatePropertyAll<Color>(
-                              Color.fromARGB(255, 61, 61, 61))),
+                              Theme.of(context).colorScheme.tertiary),
+                          foregroundColor:
+                              const MaterialStatePropertyAll<Color>(
+                                  Colors.black)),
                       onPressed: () {
                         // Validate returns true if the form is valid, or false otherwise.
                         if (_formKey.currentState!.validate()) {

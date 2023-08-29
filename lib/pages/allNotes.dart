@@ -86,8 +86,8 @@ class _NotesPageState extends State<NotesPage> {
                   child: RichText(
                     text: TextSpan(
                         text: note.note,
-                        style: const TextStyle(
-                            color: Colors.black,
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
                             fontWeight: FontWeight.bold,
                             fontSize: 20),
                         children: <TextSpan>[

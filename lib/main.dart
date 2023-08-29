@@ -1,3 +1,4 @@
+import 'package:booket/customTheme.dart';
 import 'package:booket/navbar.dart';
 import 'package:booket/pages/add.dart';
 import 'package:booket/pages/search.dart';
@@ -25,8 +26,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(useMaterial3: true),
-        //home: const HomePage(),
+        theme: darkTheme,
+        darkTheme: darkTheme,
         initialRoute: "/home",
         routes: {
           "/": (context) => LoginPage(),
